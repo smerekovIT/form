@@ -1,0 +1,51 @@
+<form [formGroup]='userForm' (ngSubmit)='onSubmit()'>
+<div class="form-group">
+  <label>Name:
+    <input formControlName='name'>
+  </label>
+</div>
+
+<div formArrayName='myFriends'>
+    <div *ngFor="let friends of myFriends.controls;  let i=index" [formGroupName]="i" >
+        <h4>Friend #{{i + 1}}</h4>
+  
+  <div class="form-group">
+    <label>firstName:
+      <input formControlName='firstName'>
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label>lastName
+      <input formControlName='lastName'>
+    </label>
+  </div>
+<div>
+  <textarea formControlName='narrative' cols="30" rows="10"></textarea>
+</div>
+
+<div  formArrayName='friendHobies'>
+    <div *ngFor="let hobies of friends.controls.friendHobies.controls; let j=index" [formGroupName]="j" >
+    <h3>Hobies</h3>
+    <div class="form-group">
+      <label>Name:
+        <input formControlName='name'>
+      </label>
+    </div>
+    <div>
+        <textarea formControlName='narrative' cols="30" rows="10"></textarea>
+      </div>
+  
+  </div>
+</div>
+  </div>
+  <button (click)="addFriend()" type="button">Add Friend</button>
+</div>
+
+
+
+<button>save</button>
+
+
+</form>
+<p>{{userForm.value | json}}</p>

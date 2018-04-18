@@ -1,0 +1,7 @@
+<nav>
+<a *ngFor="let user of users$ | async" (click)="select(user)">{{user.name}}</a>
+</nav>
+<div *ngIf='fields'>
+  <h3>User Detail</h3>
+  <app-collection [data]='fields'></app-collection>
+</div>
