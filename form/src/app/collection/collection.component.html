@@ -24,8 +24,8 @@
   <textarea formControlName='narrative' cols="30" rows="10"></textarea>
 </div>
 
-<div  formArrayName='friendHobies'>
-    <div *ngFor="let hobies of friends.controls.friendHobies.controls; let j=index" [formGroupName]="j" >
+<div  formArrayName='hobies'>
+    <div *ngFor="let hobies of friends.controls.hobies.controls; let j=index" [formGroupName]="j" >
     <h3>Hobies</h3>
     <div class="form-group">
       <label>Name:
@@ -37,6 +37,7 @@
       </div>
   
   </div>
+  <button (click)="addHobies(i)" type="button">Add hobies</button>
 </div>
   </div>
   <button (click)="addFriend()" type="button">Add Friend</button>

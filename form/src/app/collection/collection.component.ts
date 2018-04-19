@@ -9,8 +9,7 @@ import { CollectionService } from '../collection.service';
   styleUrls: ['./collection.component.css']
 })
 export class CollectionComponent implements OnChanges {
-  //   В html создает новые формы но не проставляет индекс 
-  // 
+
 @Input() data: User
 userForm: FormGroup
   constructor(
@@ -29,7 +28,7 @@ userForm: FormGroup
   }
 
    ngOnChanges() {
-    console.log(this.data)
+
     this.rebuildForm()
     
  }
@@ -42,18 +41,13 @@ userForm: FormGroup
 
     
     setFriends(friends: Friends[]) {
+      console.log(friends)
       const friendsFGs = friends.map(friends => this.fb.group({
       
                 firstName: friends.firstName,
                 lastName: friends.lastName,
                 narrative: friends.narrative,
-          friendHobies: this.fb.array([this.fb.group({
-            name: friends.hobies[0].name,
-            narrative: friends.hobies[0].narrative
-          })
-                
-                 
-          ])
+          hobies: this.fb.array(friends.hobies.map(hobi => this.fb.group(hobi)))
        })
       );
       const friendsFormArray = this.fb.array(friendsFGs);
@@ -62,13 +56,28 @@ userForm: FormGroup
     }
    
     get myFriends(): FormArray {
-      //console.log(this.userForm.get('myFriends.'))
+      
       return this.userForm.get('myFriends') as FormArray;
     };
+ 
+    addHobies(index) {
+       const friendHobies =  this.userForm.get('myFriends')['controls'][`${index}`]['controls']['hobies'] as FormArray
+       
+       friendHobies.push(this.fb.group(new Hobies()))
+    }
 
     addFriend() {
-      //console.log(this.myFriends)
-      this.myFriends.push(this.fb.group(new Friends()));
+      
+      this.myFriends.push(this.fb.group({
+        firstName: '',
+        lastName: '',
+        narrative: '',
+        hobies: this.fb.array([this.fb.group({
+          name:'',
+          narrative: ''
+        })
+      ])
+      }));
     }
 
     onSubmit() {
@@ -80,7 +89,7 @@ userForm: FormGroup
     prepareSaveUser(): User {
       const formModel = this.userForm.value;
   
-      
+      console.log(formModel)
       const FriendsDeepCopy: Friends[] = formModel.myFriends.map(
         (friends: Friends) => Object.assign({}, friends)
       );
