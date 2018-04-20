@@ -1,7 +1,7 @@
 <form [formGroup]='userForm' (ngSubmit)='onSubmit()'>
 <div class="form-group">
   <label>Name:
-    <input formControlName='name'>
+    <input formControlName='name' class="form-control">
   </label>
 </div>
 
@@ -11,42 +11,48 @@
   
   <div class="form-group">
     <label>firstName:
-      <input formControlName='firstName'>
+      <input formControlName='firstName' class="form-control">
     </label>
   </div>
 
   <div class="form-group">
     <label>lastName
-      <input formControlName='lastName'>
+      <input formControlName='lastName' class="form-control">
     </label>
   </div>
 <div>
-  <textarea formControlName='narrative' cols="30" rows="10"></textarea>
+  <textarea formControlName='narrative' cols="30" rows="10" class="form-control"></textarea>
 </div>
 
 <div  formArrayName='hobies'>
     <div *ngFor="let hobies of friends.controls.hobies.controls; let j=index" [formGroupName]="j" >
-    <h3>Hobies</h3>
+      <h4>Hobies #{{j + 1}}</h4>
     <div class="form-group">
       <label>Name:
-        <input formControlName='name'>
+        <input formControlName='name' class="form-control">
       </label>
     </div>
     <div>
-        <textarea formControlName='narrative' cols="30" rows="10"></textarea>
+        <textarea formControlName='narrative' cols="30" rows="10" class="form-control"></textarea>
       </div>
+      <button (click)="removeHobies(i,j)" type="button" class="btn btn-danger">remove hobies</button>
+  </div>
   
-  </div>
-  <button (click)="addHobies(i)" type="button">Add hobies</button>
+  <button (click)="addHobies(i)" type="button" class="btn btn-success">Add hobies</button>
+  
+ 
 </div>
+<button (click)="removeFriend(i)" type="button" class="btn btn-danger">remove Friend</button>
   </div>
-  <button (click)="addFriend()" type="button">Add Friend</button>
+ 
+  <button (click)="addFriend()" type="button" class="btn btn-success">Add Friend</button>
+  
+
 </div>
 
 
 
-<button>save</button>
+<button class="btn btn-success">save</button>
 
 
 </form>
-<p>{{userForm.value | json}}</p>

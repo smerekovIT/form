@@ -11,6 +11,7 @@ import { CollectionService } from '../collection.service';
 export class CollectionComponent implements OnChanges {
 
 @Input() data: User
+
 userForm: FormGroup
   constructor(
     private fb: FormBuilder,
@@ -66,6 +67,16 @@ userForm: FormGroup
        friendHobies.push(this.fb.group(new Hobies()))
     }
 
+    removeFriend(i){
+      
+      this.myFriends.removeAt(i)
+    }
+    removeHobies(i, j){
+      
+      const friendHobies =  this.userForm.get('myFriends')['controls'][`${i}`]['controls']['hobies'] as FormArray
+        
+      friendHobies.removeAt(j)
+    }
     addFriend() {
       
       this.myFriends.push(this.fb.group({
